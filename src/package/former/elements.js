@@ -1,21 +1,31 @@
 import {
   Input,
-  Select,
   DatePicker,
   TimePicker,
-  DateTimePicker,
   Rate,
   Slider,
+  Cascader,
+  InputNumber,
 } from 'element-ui'
+import Select from '@/components/select'
 import Upload from '@/components/upload'
+import Radio from '@/components/radio'
+import Checkbox from '@/components/checkbox'
+import CheckboxGroup from '@/components/checkboxGroup'
+import RadioGroup from '@/components/radioGroup'
 
 export default {
-  Input,
   Select,
-  DatePicker,
   Upload,
+  Checkbox,
+  Radio,
+  CheckboxGroup,
+  RadioGroup,
+  Input,
+  DatePicker,
   Rate,
   TimePicker,
-  DateTimePicker,
   Slider,
+  Cascader,
+  InputNumber,
 }

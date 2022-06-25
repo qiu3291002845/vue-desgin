@@ -1,7 +1,7 @@
 <script>
 import Elements from './elements'
 import classNames from 'classnames'
-
+import handleChooseList from './handleChooseList'
 export default {
   props: {
     viewProps: {
@@ -9,6 +9,10 @@ export default {
       default: () => ({}),
     },
     label: {
+      type: String,
+      default: '',
+    },
+    valueKey: {
       type: String,
       default: '',
     },
@@ -38,9 +42,8 @@ export default {
     },
   },
   render() {
-    const { viewProps_, value_, label, className } = this
+    const { viewProps_, value_, label, className, valueKey } = this
     const { view } = this.$attrs
-    const handleChooseList = ['Select']
     const placeholderHandleMsg = handleChooseList.includes(view)
       ? '请选择'
       : '请输入'
@@ -55,6 +58,7 @@ export default {
       <Element
         class={classnames}
         value={value_}
+        valueKey={valueKey}
         {...{ attrs: viewProps_ }}
         onInput={e => {
           this.value_ = e

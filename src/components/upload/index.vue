@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-upload
+    <elUpload
       :on-preview="file => handlePictureCardPreview(file)"
       :on-remove="(file, fileList) => onRemove(file, fileList)"
       :before-remove="(file, fileList) => onBeforeRemove(file, fileList)"
@@ -53,7 +53,7 @@
         <img v-if="imageUrl" :src="imageUrl" class="avatar" />
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </template>
-    </el-upload>
+    </elUpload>
     <div class="picture__box" v-if="PreviewImageUrl">
       <el-image
         ref="uploadImageRef"
@@ -69,7 +69,11 @@
 </template>
 <script>
 import classNames from 'classnames'
+import { Upload } from 'element-ui'
 export default {
+  components: {
+    elUpload: Upload,
+  },
   props: {
     uploadWidth: { type: Number, default: 125 },
     uploadHeight: { type: Number, default: 125 },

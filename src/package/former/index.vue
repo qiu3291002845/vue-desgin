@@ -1,7 +1,7 @@
 <script>
 import classnames from 'classnames'
 import ProcedureFormItem from './procedureFormItem.vue'
-
+import { Col, Row, FormItem, Form } from 'element-ui'
 export default {
   props: {
     column: { type: Number, default: 3 },
@@ -74,44 +74,45 @@ export default {
       this
     const colSpan = 24 / (column || 3)
     return (
-      <el-form
+      <Form
         class={classNames}
         ref='formRef'
         props={{
           model: formData,
         }}
       >
-        <el-row>
+        <Row>
           {datasource.length &&
             datasource.map((item, index) => {
               let { initialValue } = item
               return (
-                <el-col span={colSpan}>
-                  <el-row>
-                    <el-form-item key={item.key || index}>
-                      <el-row>
-                        <el-col span={labelCol}>
+                <Col span={colSpan}>
+                  <Row>
+                    <FormItem key={item.key || index}>
+                      <Row>
+                        <Col span={labelCol}>
                           <div class='former-item-label'>{item.label}</div>
-                        </el-col>
-                        <el-col span={wrapperCol}>
+                        </Col>
+                        <Col span={wrapperCol}>
                           <ProcedureFormItem
                             ref={'form_' + item.key + 'Ref'}
                             value={initialValue}
+                            valueKey={item.key}
                             label={item.label}
                             className={item.className}
                             viewProps={item.viewProps || null}
                             view={item.view}
                             onChange={e => (this.formData[item.key] = e)}
                           />
-                        </el-col>
-                      </el-row>
-                    </el-form-item>
-                  </el-row>
-                </el-col>
+                        </Col>
+                      </Row>
+                    </FormItem>
+                  </Row>
+                </Col>
               )
             })}
-        </el-row>
-      </el-form>
+        </Row>
+      </Form>
     )
   },
 }
