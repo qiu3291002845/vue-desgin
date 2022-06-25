@@ -1,0 +1,7 @@
+{
+    "Former": {
+        "attributes": ["datasource", "label-width", "size"],
+        "default": ["datasource"],
+        "description": "表单组件"
+    }
+}

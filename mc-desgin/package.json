@@ -1,0 +1,14 @@
+{
+    "name": "mc-desgin",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "main": "mc-desgin.common.js",
+    "dependencies": {},
+    "devDependencies": {},
+    "keywords": [],
+    "license": "ISC"
+}

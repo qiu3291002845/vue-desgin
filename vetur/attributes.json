@@ -1,0 +1,6 @@
+{
+    "Former/datasource": {
+        "type": "Array",
+        "options": ["medium", "small", "mini"]
+    }
+}
