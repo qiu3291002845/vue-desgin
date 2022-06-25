@@ -8,6 +8,7 @@ export default {
     labelCol: { type: Number, default: 6 },
     wrapperCol: { type: Number, default: 18 },
     datasource: { type: Array, default: () => [] },
+    rules: { type: Object, default: () => {} },
     useForm: { type: Function, default: () => {} },
     setValue: { type: Function, default: () => {} },
     className: { type: String, default: '' },
@@ -20,19 +21,31 @@ export default {
   },
   data() {
     return {
+      loading: false,
       formData: {},
       formObj: {
         getFieldsValue: this._getFieldsValue,
         getFieldValue: this._getFieldValue,
         setFieldsValue: this._setFieldsValue,
+        validate: this._validate,
       },
     }
   },
   mounted() {
     this.useForm(this.formObj)
-    this._loadFormData()
   },
   methods: {
+    _validate() {
+      new Promise((resolve, reject) => {
+        this.$refs.formRef.validate((boolean, object) => {
+          if (boolean) {
+            resolve(boolean, object)
+          } else {
+            reject(false)
+          }
+        })
+      })
+    },
     _setFieldsValue(oneParams, twoParams) {
       if (typeof oneParams === 'object') {
         this.formData = { ...this.formData, ...oneParams }
@@ -59,24 +72,23 @@ export default {
         return this.formData
       }
     },
-    _loadFormData() {
-      if (Array.isArray(this.datasource)) {
-        for (const item of this.datasource) {
-          this.formData[item.key] = item.initialValue || ''
-        }
-      } else {
-        throw 'former datasource 不是一个数组'
-      }
-    },
   },
   render() {
-    const { classNames, formData, datasource, labelCol, wrapperCol, column } =
-      this
+    const {
+      classNames,
+      formData,
+      datasource,
+      labelCol,
+      wrapperCol,
+      column,
+      rules,
+    } = this
     const colSpan = 24 / (column || 3)
     return (
       <Form
         class={classNames}
         ref='formRef'
+        rules={rules}
         props={{
           model: formData,
         }}
@@ -84,25 +96,39 @@ export default {
         <Row>
           {datasource.length &&
             datasource.map((item, index) => {
-              let { initialValue } = item
+              // let { initialValue } = item
               return (
-                <Col span={colSpan}>
+                <Col key={item.key || index} span={colSpan}>
                   <Row>
-                    <FormItem key={item.key || index}>
+                    <FormItem
+                      prop={item.key}
+                      rules={{
+                        required: item.required,
+                        trigger: 'blur',
+                        message: `${item.label}为必填`,
+                      }}
+                    >
                       <Row>
                         <Col span={labelCol}>
-                          <div class='former-item-label'>{item.label}</div>
+                          <div class='former-item-label'>
+                            {item.required && (
+                              <span class='required_icon'>*</span>
+                            )}
+                            <span>{item.label}</span>
+                          </div>
                         </Col>
                         <Col span={wrapperCol}>
                           <ProcedureFormItem
                             ref={'form_' + item.key + 'Ref'}
-                            value={initialValue}
+                            value={formData[item.key]}
                             valueKey={item.key}
                             label={item.label}
                             className={item.className}
                             viewProps={item.viewProps || null}
                             view={item.view}
-                            onChange={e => (this.formData[item.key] = e)}
+                            onChange={e => {
+                              this.$set(this.formData, item.key, e)
+                            }}
                           />
                         </Col>
                       </Row>
@@ -121,6 +147,10 @@ export default {
 .mc-former {
   ::v-deep {
     .former-item-label {
+      .required_icon {
+        color: #ff2031;
+        margin-right: 2px;
+      }
       text-align: right;
       vertical-align: middle;
       float: left;

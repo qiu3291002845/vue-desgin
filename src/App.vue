@@ -22,11 +22,9 @@ export default {
           label: '用户名',
           key: 'username',
           view: 'Input',
-          initialValue: '111',
-          viewProps: {
-            disabled: false,
-            size: 'mini',
-          },
+          initialValue: '1111',
+          required: true,
+          viewProps: {},
         },
         {
           label: '密码',
@@ -229,7 +227,7 @@ export default {
     }
   },
   methods: {
-    handleClick() {
+    async handleClick() {
       console.log(this.$form.setFieldsValue('password', 12345))
     },
     useForm(e) {
