@@ -38,6 +38,7 @@ export default {
           label: 'RadioGroup',
           key: 'RadioGroup',
           view: 'RadioGroup',
+          initialValue: '选项1',
           viewProps: {
             type: 'button',
             options: [
@@ -69,6 +70,14 @@ export default {
           label: 'CheckboxGroup',
           key: 'CheckboxGroup',
           view: 'CheckboxGroup',
+          required: true,
+          rules: {
+            type: 'array',
+            required: true,
+            message: '请至少选择一个活动性质',
+            trigger: 'change',
+          },
+          initialValue: [],
           viewProps: {
             type: 'button',
             options: [
@@ -120,6 +129,7 @@ export default {
           label: '选择器',
           key: 'Select',
           view: 'Select',
+          required: true,
           initialValue: '',
           viewProps: {
             options: [
@@ -149,6 +159,7 @@ export default {
         {
           label: '评分',
           key: 'rate',
+          required: true,
           view: 'Rate',
           viewProps: {},
         },
@@ -156,6 +167,7 @@ export default {
           label: '级联选择器',
           key: 'Cascader',
           view: 'Cascader',
+          required: true,
           viewProps: {
             options: [
               {
@@ -195,12 +207,14 @@ export default {
           label: '滑块',
           key: 'slider',
           view: 'Slider',
+          required: true,
           viewProps: {},
         },
         {
           label: '时间',
           key: 'time',
           view: 'DatePicker',
+          required: true,
           viewProps: {
             type: 'datetime',
             valueFormat: 'yyyy-MM-dd HH:mm:ss',
@@ -228,7 +242,8 @@ export default {
   },
   methods: {
     async handleClick() {
-      console.log(this.$form.setFieldsValue('password', 12345))
+      const res = await this.$form.validate()
+      console.log(res)
     },
     useForm(e) {
       this.$form = e

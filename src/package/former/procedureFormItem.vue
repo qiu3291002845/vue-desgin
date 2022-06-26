@@ -12,10 +12,11 @@ export default {
       type: String,
       default: '',
     },
-    valueKey: {
+    formKey: {
       type: String,
       default: '',
     },
+    initialValue: {},
     className: {
       type: String,
       default: '',
@@ -23,7 +24,7 @@ export default {
   },
   data() {
     return {
-      value_: this.$attrs.value,
+      value_: this.$attrs.value || this.initialValue,
     }
   },
   computed: {
@@ -42,7 +43,7 @@ export default {
     },
   },
   render() {
-    const { viewProps_, value_, label, className, valueKey } = this
+    const { viewProps_, value_, label, className, formKey } = this
     const { view } = this.$attrs
     const placeholderHandleMsg = handleChooseList.includes(view)
       ? '请选择'
@@ -58,17 +59,17 @@ export default {
       <Element
         class={classnames}
         value={value_}
-        valueKey={valueKey}
+        formKey={formKey}
         {...{ attrs: viewProps_ }}
         onInput={e => {
-          this.value_ = e
           this.$emit('input', e)
           this.$emit('change', e)
+          this.value_ = e
         }}
         onChange={e => {
-          this.value_ = e
           this.$emit('input', e)
           this.$emit('change', e)
+          this.value_ = e
         }}
         placeholder={placeholderHandleMsg + label}
       />

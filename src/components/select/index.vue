@@ -5,7 +5,7 @@
     :filterable="filterable"
     :clearable="clearable"
     :placeholder="placeholder"
-    @change="changeSelect"
+    @change="changeSelect($event)"
     :multiple="multiple"
     :remote="remote"
     :reserve-keyword="reserveKeyword"

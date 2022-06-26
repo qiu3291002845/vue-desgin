@@ -1,5 +1,5 @@
 <template>
-  <Checkbox v-model="value_" :label="valueKey" @change="handleChange">
+  <Checkbox v-model="value_" :label="formKey" @change="handleChange">
     {{ label }}
   </Checkbox>
 </template>
@@ -14,7 +14,7 @@ export default {
       type: String,
       default: '复选框',
     },
-    valueKey: {
+    formKey: {
       type: String,
       default: '',
     },

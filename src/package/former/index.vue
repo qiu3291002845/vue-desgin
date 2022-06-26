@@ -36,10 +36,10 @@ export default {
   },
   methods: {
     _validate() {
-      new Promise((resolve, reject) => {
-        this.$refs.formRef.validate((boolean, object) => {
+      return new Promise((resolve, reject) => {
+        this.$refs.formRef.validate(boolean => {
           if (boolean) {
-            resolve(boolean, object)
+            resolve(this.formData)
           } else {
             reject(false)
           }
@@ -91,22 +91,23 @@ export default {
         rules={rules}
         props={{
           model: formData,
+          rules,
         }}
       >
         <Row>
           {datasource.length &&
             datasource.map((item, index) => {
-              // let { initialValue } = item
               return (
                 <Col key={item.key || index} span={colSpan}>
                   <Row>
                     <FormItem
-                      prop={item.key}
-                      rules={{
-                        required: item.required,
-                        trigger: 'blur',
-                        message: `${item.label}为必填`,
-                      }}
+                      prop={item.required && item.key}
+                      rules={
+                        item.rules || {
+                          required: item.required,
+                          message: `${item.label}为必填`,
+                        }
+                      }
                     >
                       <Row>
                         <Col span={labelCol}>
@@ -121,13 +122,15 @@ export default {
                           <ProcedureFormItem
                             ref={'form_' + item.key + 'Ref'}
                             value={formData[item.key]}
-                            valueKey={item.key}
+                            formKey={item.key}
                             label={item.label}
                             className={item.className}
                             viewProps={item.viewProps || null}
                             view={item.view}
                             onChange={e => {
                               this.$set(this.formData, item.key, e)
+                              this.$refs['formRef'] &&
+                                this.$refs['formRef'].validateField(item.key)
                             }}
                           />
                         </Col>

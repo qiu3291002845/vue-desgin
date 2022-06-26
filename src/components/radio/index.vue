@@ -1,5 +1,5 @@
 <template>
-  <Radio v-model="value_" :label="valueKey" @change="handleChange">
+  <Radio v-model="value_" :label="formKey" @change="handleChange">
     {{ label }}
   </Radio>
 </template>
@@ -14,7 +14,7 @@ export default {
       type: String,
       default: '单选框',
     },
-    valueKey: {
+    formKey: {
       type: String,
       default: '',
     },
