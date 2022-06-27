@@ -15,41 +15,15 @@
       :column="1"
       :datasource="formerList"
     />
-    <Select
-      v-model="a"
-      :options="[
-        {
-          value: '选项1',
-          label: '黄金糕',
-          border: true,
-        },
-        {
-          value: '选项2',
-          label: '双皮奶',
-        },
-        {
-          value: '选项3',
-          label: '蚵仔煎',
-        },
-        {
-          value: '选项4',
-          label: '龙须面',
-        },
-        {
-          value: '选项5',
-          label: '北京烤鸭',
-        },
-      ]"
-    />
   </div>
 </template>
 
 <script>
 import Former from './package/former'
-import Select from './components/select'
+// import { Former } from 'mc-former'
 export default {
   name: 'App',
-  components: { Former, Select },
+  components: { Former },
   data() {
     return {
       a: '',
