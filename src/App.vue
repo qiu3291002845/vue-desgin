@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Former from './package/former'
-// import { Former } from 'mc-former'
+// import Former from './package/former'
+import { Former } from 'mc-former'
 export default {
   name: 'App',
   components: { Former },

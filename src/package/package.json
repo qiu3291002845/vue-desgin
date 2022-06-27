@@ -8,5 +8,9 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "vetur": {
+        "tags": "vetur/tags.json",
+        "attributes": "vetur/attributes.json"
+    }
 }
