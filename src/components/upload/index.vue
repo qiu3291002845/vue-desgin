@@ -38,6 +38,9 @@
         '--uploadHeight': uploadHeight + 'px',
       }"
     >
+      <template v-if="listType === 'picture-card'">
+        <i class="el-icon-plus"></i>
+      </template>
       <template v-if="listType === 'text'">
         <el-button :size="uploadButtonSize" :type="uploadButtonType">
           点击上传
@@ -45,9 +48,6 @@
         <div slot="tip" class="el-upload__tip">
           {{ description }}
         </div>
-      </template>
-      <template v-if="listType === 'picture-card'">
-        <i class="el-icon-plus"></i>
       </template>
       <template v-if="listType === 'picture'">
         <img v-if="imageUrl" :src="imageUrl" class="avatar" />
@@ -127,7 +127,7 @@ export default {
   },
   created() {
     this.chassnames = classNames('mc-upload', {
-      'avatar-uploader': (this.listType = 'picture'),
+      'avatar-uploader': this.listType === 'picture',
     })
   },
   methods: {

@@ -1,6 +1,29 @@
 {
     "Former/datasource": {
-        "type": "Array",
-        "options": ["medium", "small", "mini"]
+        "type": "Array"
+    },
+    "Former/rules": {
+        "type": "Array"
+    },
+    "Former/submitProps": {
+        "type": "Object"
+    },
+    "Former/labelCol": {
+        "type": "Number"
+    },
+    "Former/wrapperCol": {
+        "type": "Number"
+    },
+    "Former/column": {
+        "type": "Number"
+    },
+    "Former/useForm": {
+        "type": "Function"
+    },
+    "Former/onReset": {
+        "type": "Function"
+    },
+    "Former/onSubmit": {
+        "type": "Function"
     }
 }

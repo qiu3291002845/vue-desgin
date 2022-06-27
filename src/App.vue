@@ -6,17 +6,53 @@
       alt="Vue logo"
       src="./assets/logo.png"
     />
-    <Former :useForm="useForm" :column="1" :datasource="formerList" />
+    <Former
+      :onSubmit="onSubmit"
+      :onReset="onReset"
+      :resetText="null"
+      :submitText="null"
+      :useForm="useForm"
+      :column="1"
+      :datasource="formerList"
+    />
+    <Select
+      v-model="a"
+      :options="[
+        {
+          value: '选项1',
+          label: '黄金糕',
+          border: true,
+        },
+        {
+          value: '选项2',
+          label: '双皮奶',
+        },
+        {
+          value: '选项3',
+          label: '蚵仔煎',
+        },
+        {
+          value: '选项4',
+          label: '龙须面',
+        },
+        {
+          value: '选项5',
+          label: '北京烤鸭',
+        },
+      ]"
+    />
   </div>
 </template>
 
 <script>
 import Former from './package/former'
+import Select from './components/select'
 export default {
   name: 'App',
-  components: { Former },
+  components: { Former, Select },
   data() {
     return {
+      a: '',
       formerList: [
         {
           label: '用户名',
@@ -132,6 +168,7 @@ export default {
           required: true,
           initialValue: '',
           viewProps: {
+            filterable: true,
             options: [
               {
                 value: '选项1',
@@ -225,12 +262,10 @@ export default {
           key: 'upload',
           view: 'Upload',
           viewProps: {
-            listType: 'picture',
-            showFileList: false,
+            listType: 'picture-card',
             action: '/upload',
             onChange: e => {
               console.log(e)
-              this.$form.setFieldsValue('upload', '12312312')
             },
             onError: e => {
               console.log(e)
@@ -238,15 +273,25 @@ export default {
           },
         },
       ],
+      $form: null,
     }
   },
   methods: {
     async handleClick() {
+      console.log(this.$form)
       const res = await this.$form.validate()
       console.log(res)
     },
     useForm(e) {
+      console.log(e)
       this.$form = e
+    },
+    async onSubmit() {
+      const res = await this.$form.validate()
+      console.log(res)
+    },
+    onReset(e) {
+      console.log(e)
     },
   },
 }

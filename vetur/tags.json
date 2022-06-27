@@ -1,7 +1,41 @@
 {
     "Former": {
-        "attributes": ["datasource", "label-width", "size"],
+        "attributes": [
+            "column",
+            "labelCol",
+            "wrapperCol",
+            "datasource",
+            "rules",
+            "submitProps",
+            "resetProps",
+            "useForm",
+            "className",
+            "submitText",
+            "resetText",
+            "labelWidth",
+            "onReset",
+            "onSubmit"
+        ],
         "default": ["datasource"],
         "description": "表单组件"
+    },
+    "Select": {
+        "attributes": [
+            "value",
+            "placeholder",
+            "loading",
+            "multiple",
+            "remote",
+            "reserveKeyword",
+            "filterable",
+            "clearable",
+            "disabled",
+            "labelKey",
+            "valueKey",
+            "options",
+            "remoteMetho "
+        ],
+        "defaults": ["v-model", "placeholder"],
+        "description": "When there are plenty of options, use a drop-down menu to display and select desired ones."
     }
 }

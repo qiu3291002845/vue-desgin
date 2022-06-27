@@ -1,7 +1,7 @@
 <script>
 import classnames from 'classnames'
 import ProcedureFormItem from './procedureFormItem.vue'
-import { Col, Row, FormItem, Form } from 'element-ui'
+import { Col, Row, FormItem, Form, Button } from 'element-ui'
 export default {
   props: {
     column: { type: Number, default: 3 },
@@ -9,10 +9,15 @@ export default {
     wrapperCol: { type: Number, default: 18 },
     datasource: { type: Array, default: () => [] },
     rules: { type: Object, default: () => {} },
+    submitProps: { type: Object, default: () => {} },
+    resetProps: { type: Object, default: () => {} },
     useForm: { type: Function, default: () => {} },
-    setValue: { type: Function, default: () => {} },
     className: { type: String, default: '' },
+    submitText: { type: [String, null], default: '提交' },
+    resetText: { type: [String, null], default: '重置' },
     labelWidth: { type: String, default: 'auto' },
+    onReset: { type: Function, default: () => {} },
+    onSubmit: { type: Function, default: () => {} },
   },
   computed: {
     classNames() {
@@ -28,13 +33,18 @@ export default {
         getFieldValue: this._getFieldValue,
         setFieldsValue: this._setFieldsValue,
         validate: this._validate,
+        resetFields: this._resetFields,
       },
     }
   },
+
   mounted() {
     this.useForm(this.formObj)
   },
   methods: {
+    _resetFields() {
+      this.$refs.formRef.resetFields()
+    },
     _validate() {
       return new Promise((resolve, reject) => {
         this.$refs.formRef.validate(boolean => {
@@ -82,8 +92,25 @@ export default {
       wrapperCol,
       column,
       rules,
+      submitProps,
+      resetProps,
+      submitText,
+      resetText,
+      formObj,
+      onReset,
+      onSubmit,
     } = this
     const colSpan = 24 / (column || 3)
+    const reset = () => {
+      const result = onReset()
+      if (!result) {
+        formObj.resetFields()
+        this._setFieldsValue(formObj.getFieldsValue())
+      }
+    }
+    const submit = () => {
+      onSubmit(formObj.getFieldsValue())
+    }
     return (
       <Form
         class={classNames}
@@ -110,7 +137,7 @@ export default {
                       }
                     >
                       <Row>
-                        <Col span={labelCol}>
+                        <Col span={item.labelCol || labelCol}>
                           <div class='former-item-label'>
                             {item.required && (
                               <span class='required_icon'>*</span>
@@ -118,7 +145,7 @@ export default {
                             <span>{item.label}</span>
                           </div>
                         </Col>
-                        <Col span={wrapperCol}>
+                        <Col span={item.wrapperCol || wrapperCol}>
                           <ProcedureFormItem
                             ref={'form_' + item.key + 'Ref'}
                             value={formData[item.key]}
@@ -140,6 +167,22 @@ export default {
                 </Col>
               )
             })}
+          {(resetText || submitText) && (
+            <Col span={colSpan}>
+              <Row type='flex' justify='center'>
+                {resetText && (
+                  <Button {...resetProps} onClick={reset}>
+                    {resetText}
+                  </Button>
+                )}
+                {submitText && (
+                  <Button type='primary' {...submitProps} onClick={submit}>
+                    {submitText}
+                  </Button>
+                )}
+              </Row>
+            </Col>
+          )}
         </Row>
       </Form>
     )

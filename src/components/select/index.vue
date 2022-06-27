@@ -90,6 +90,7 @@ export default {
   methods: {
     changeSelect(e) {
       this.$emit('change', e)
+      this.$emit('input', e)
     },
   },
 }
